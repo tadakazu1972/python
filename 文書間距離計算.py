@@ -4,6 +4,7 @@ import os
 import sys
 import scipy as sp
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 #分かち書きしたファイルを格納しているディレクトリを設定
 DIR = "/Users/tadakazu/Desktop/wakati"
@@ -11,8 +12,11 @@ DIR = "/Users/tadakazu/Desktop/wakati"
 #フォルダの中の複数のテキストファイルを一気に読込
 data = [open(os.path.join(DIR, f)).read() for f in os.listdir(DIR)]
 
+#TF-IDF
+
 #ベクトル化
-vectorizer = CountVectorizer(min_df=1)
+#vectorizer = CountVectorizer(min_df=1)
+vectorizer = TfidfVectorizer(min_df=1)
 X_train = vectorizer.fit_transform(data)
 num_files, num_features = X_train.shape
 
@@ -21,7 +25,7 @@ print("#Files: %d, #features: %d" % (num_files, num_features))
 print(vectorizer.get_feature_names())
 
 #検索データ
-new_data = "予防　接種"
+new_data = "休日　子供　預ける"
 new_data_vec = vectorizer.transform([new_data])
 
 #内容表示
